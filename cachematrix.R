@@ -1,8 +1,25 @@
-## Put comments here that give an overall description of what your
-## functions do
+## This tiny module gives you a matrix, that can cache it's solve 
+## — so it won't be caclulated every time you need it
+## 
+## This "cached" matrix is wrapped into special object — you can
+## construct an instance with "makeCacheMatrix" function
+##
+## Use methods get/set to access matrix inside the object
+##
+## Use method cacheSolve to obtain matrix solve. Calcutation is cached
+##
+## Here is complete example:
+##    cached <- makeCacheMatrix(yourMatrix) ## Create wrapped matrix
+##    tmp <- cached.get() ## Read matrix
+##    cached.set(anotherMatrix) ## Change matrix
+##    s <- cacheSolve(cached) ## Obtain matrix solve with caching
+##
 
-## Write a short comment describing this function
 
+## Create cached matrix
+##
+## Input: your matrix
+## Output: cached matrix
 makeCacheMatrix <- function(x = matrix()) {
     s <- NULL
     
@@ -24,8 +41,13 @@ makeCacheMatrix <- function(x = matrix()) {
 }
 
 
-## Write a short comment describing this function
 
+## Obtain matrix solve
+##
+## Input: cached matrix. You can create it with "makeCachedMatrix"
+## Output: matrix solve
+##
+## Metod uses cache. So solve won't be caclulated on every call
 cacheSolve <- function(x, ...) {
         ## Return a matrix that is the inverse of 'x'
     s <- x$getSolve()
@@ -41,7 +63,11 @@ cacheSolve <- function(x, ...) {
 }
 
 
-tst <- makeCacheMatrix( matrix( sample(1:10, 25, replace=TRUE), 5, 5) )
-cacheSolve(tst)
-cacheSolve(tst)
-cacheSolve(tst)
+
+## Test section
+## 
+## Message "getting cached solve" should appear on second call
+##
+##tst <- makeCacheMatrix( matrix( sample(1:10, 25, replace=TRUE), 5, 5) )
+##cacheSolve(tst)
+##cacheSolve(tst)
